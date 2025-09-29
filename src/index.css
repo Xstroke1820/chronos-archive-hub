@@ -2,41 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Dark Futuristic Design System - Cyberpunk/Tech Aesthetic */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark Base Colors */
+    --background: 224 15% 8%;
+    --foreground: 210 100% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card System */
+    --card: 224 20% 12%;
+    --card-foreground: 210 100% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Interactive Elements */
+    --popover: 224 25% 15%;
+    --popover-foreground: 210 100% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Neon Accent Colors */
+    --primary: 195 100% 60%;
+    --primary-foreground: 224 15% 8%;
+    
+    --secondary: 280 100% 70%;
+    --secondary-foreground: 210 100% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Muted Colors */
+    --muted: 224 20% 20%;
+    --muted-foreground: 210 50% 70%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Accent System */
+    --accent: 195 100% 60%;
+    --accent-foreground: 224 15% 8%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Status Colors */
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 210 100% 95%;
+    
+    --success: 142 76% 50%;
+    --warning: 48 96% 60%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Interactive States */
+    --border: 224 30% 25%;
+    --input: 224 30% 18%;
+    --ring: 195 100% 60%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    /* Design Tokens */
+    --radius: 0.75rem;
+    
+    /* Glow Effects */
+    --glow-primary: 195 100% 60%;
+    --glow-secondary: 280 100% 70%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(195 100% 60% / 0.1), hsl(280 100% 70% / 0.1));
+    --gradient-card: linear-gradient(145deg, hsl(224 25% 15% / 0.9), hsl(224 20% 12% / 0.9));
+    --gradient-border: linear-gradient(90deg, hsl(195 100% 60% / 0.3), hsl(280 100% 70% / 0.3));
+    
+    /* Shadows & Glows */
+    --shadow-glow: 0 0 20px hsl(var(--glow-primary) / 0.3);
+    --shadow-hover: 0 0 30px hsl(var(--glow-primary) / 0.5);
+    --shadow-card: 0 8px 32px hsl(224 15% 8% / 0.4);
+    
+    /* Animation Curves */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +129,94 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  /* Card System */
+  .card-tech {
+    @apply bg-card/80 backdrop-blur-sm border border-border/50 rounded-lg;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
+  }
+  
+  .card-tech:hover {
+    @apply border-primary/50;
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  
+  /* Glow Effects */
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--glow-primary) / 0.3);
+  }
+  
+  .glow-secondary {
+    box-shadow: 0 0 20px hsl(var(--glow-secondary) / 0.3);
+  }
+  
+  /* Tab Animations */
+  .tab-fade-enter {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  .tab-fade-exit {
+    opacity: 1;
+    animation: fadeOut 0.3s ease-out forwards;
+  }
+  
+  /* Gradient Borders */
+  .gradient-border {
+    position: relative;
+    background: var(--gradient-border);
+    padding: 1px;
+    border-radius: calc(var(--radius) + 1px);
+  }
+  
+  .gradient-border > * {
+    background: hsl(var(--card));
+    border-radius: var(--radius);
+  }
+}
+
+@layer utilities {
+  /* Custom Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--glow-primary) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px hsl(var(--glow-primary) / 0.5);
+    }
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 }
